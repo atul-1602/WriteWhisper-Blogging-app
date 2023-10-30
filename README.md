@@ -34,9 +34,12 @@ WriteWhisper is a modern and feature-rich blogging application that allows you t
 
 - ## Screenshots
   
-![Screenshot (150)](https://github.com/atul-1602/WriteWhisper-Blogging-![![![Screenshot (149)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/d29f35e2-d3e1-4304-81ce-5a59e69cc619)
-Uploading Screenshot (148).png…]()
-Screenshot (151)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/c49913da-67b8-48e3-aeef-501c2e9e42f5)
-app/assets/109483147/033f7262-6368-4709-bb1f-571c8f7c695a)![Screenshot (152)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/50e2b59e-9c95-424d-9351-b8eca64a26d7)
+![Screenshot (150)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/6c523ae5-209c-4f21-a36d-b9b9d6e5dc3a)
 
+![Screenshot (151)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/d43ad136-78f6-434d-a87e-d9bc52d281a8)
 
+![Screenshot (152)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/8e3bcbda-c26d-4ec3-bd0b-bf3704f36438)
+
+![Screenshot (148)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/db4d388c-7007-44c7-b2b2-67a2fec65a50)
+
+![Screenshot (149)](https://github.com/atul-1602/WriteWhisper-Blogging-app/assets/109483147/8c5409cb-a57e-455e-b542-a0f99d8bb6f3)
