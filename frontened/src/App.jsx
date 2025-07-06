@@ -13,7 +13,6 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import CreateBlog from "./pages/Blog/CreateBlog";
 import EditBlog from "./pages/Blog/EditBlog";
 import BlogDetail from "./pages/Blog/BlogDetail";
-import Profile from "./pages/Profile/Profile";
 import UserProfile from "./pages/Profile/UserProfile";
 import Search from "./pages/Search";
 import Category from "./pages/Category";
@@ -30,8 +29,8 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/blog/:slug" element={<BlogDetail />} />
+                <Route path="/signup" element={<Register />} />
+                <Route path="/blog/:id" element={<BlogDetail />} />
                 <Route path="/user/:username" element={<UserProfile />} />
                 <Route path="/category/:slug" element={<Category />} />
                 <Route path="/search" element={<Search />} />
@@ -54,7 +53,7 @@ function App() {
                 } />
                 <Route path="/profile" element={
                   <ProtectedRoute>
-                    <Profile />
+                    <UserProfile />
                   </ProtectedRoute>
                 } />
                 

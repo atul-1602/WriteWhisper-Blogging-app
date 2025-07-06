@@ -36,13 +36,20 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const [blogsResponse, statsResponse] = await Promise.all([
-        api.get('/blogs/user/me'),
-        api.get('/users/stats')
-      ]);
-
+      // Get user's blogs using the correct endpoint
+      const blogsResponse = await api.get(`/blogs/user/${user._id}`);
       setBlogs(blogsResponse.data.data);
-      setStats(statsResponse.data.data);
+      
+      // For now, calculate stats from blogs since there's no dedicated stats endpoint
+      const calculatedStats = {
+        totalBlogs: blogsResponse.data.data.length,
+        publishedBlogs: blogsResponse.data.data.filter(blog => blog.isPublished).length,
+        draftBlogs: blogsResponse.data.data.filter(blog => !blog.isPublished).length,
+        totalViews: blogsResponse.data.data.reduce((sum, blog) => sum + (blog.views || 0), 0),
+        totalLikes: blogsResponse.data.data.reduce((sum, blog) => sum + (blog.likes?.length || 0), 0),
+        totalComments: blogsResponse.data.data.reduce((sum, blog) => sum + (blog.comments?.length || 0), 0)
+      };
+      setStats(calculatedStats);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {
@@ -230,8 +237,8 @@ const Dashboard = () => {
                     
                     <div className="flex items-center space-x-2">
                       <Link
-                        to={`/blog/${blog.slug}`}
-                        className="btn-ghost btn-sm"
+                        to={`/blog/${blog._id}`}
+                        className="btn-primary btn-sm"
                       >
                         <Eye className="w-4 h-4" />
                       </Link>

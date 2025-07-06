@@ -43,24 +43,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
-  coverImage: {
-    type: String,
-    default: ""
-  },
-  socialLinks: {
-    website: String,
-    twitter: String,
-    linkedin: String,
-    github: String
-  },
   role: {
     type: String,
-    enum: ['user', 'admin', 'moderator'],
+    enum: ['user', 'admin'],
     default: 'user'
-  },
-  isVerified: {
-    type: Boolean,
-    default: false
   },
   isActive: {
     type: Boolean,
@@ -77,18 +63,7 @@ const userSchema = new mongoose.Schema({
   bookmarks: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Blog'
-  }],
-  preferences: {
-    emailNotifications: {
-      type: Boolean,
-      default: true
-    },
-    theme: {
-      type: String,
-      enum: ['light', 'dark', 'auto'],
-      default: 'auto'
-    }
-  }
+  }]
 }, {
   timestamps: true
 });
@@ -114,16 +89,6 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 // Virtual for full name
 userSchema.virtual('fullName').get(function() {
   return `${this.firstName} ${this.lastName}`;
-});
-
-// Virtual for follower count
-userSchema.virtual('followerCount').get(function() {
-  return this.followers.length;
-});
-
-// Virtual for following count
-userSchema.virtual('followingCount').get(function() {
-  return this.following.length;
 });
 
 // Ensure virtuals are serialized

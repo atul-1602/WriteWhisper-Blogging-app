@@ -10,7 +10,6 @@ import { dirname, join } from 'path';
 // Import routes
 import authRoutes from './routes/auth.js';
 import blogRoutes from './routes/blogs.js';
-import userRoutes from './routes/users.js';
 import categoryRoutes from './routes/categories.js';
 import commentRoutes from './routes/comments.js';
 
@@ -65,7 +64,7 @@ app.use(cors({
 // Database connection
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI;
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/writewhisper';
     console.log('🔗 Connecting to MongoDB:', mongoURI);
     
     await mongoose.connect(mongoURI, {
@@ -96,11 +95,10 @@ app.get('/api/health', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/blogs', blogRoutes);
-app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/comments', commentRoutes);
 
-// Serve static files in production
+// Serve static files in productions
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(join(__dirname, '../frontened/dist')));
   
@@ -122,18 +120,16 @@ app.listen(PORT, () => {
 });
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
   console.log('SIGTERM received, shutting down gracefully');
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
+  await mongoose.connection.close();
+  console.log('MongoDB connection closed');
+  process.exit(0);
 });
 
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
   console.log('SIGINT received, shutting down gracefully');
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
+  await mongoose.connection.close();
+  console.log('MongoDB connection closed');
+  process.exit(0);
 });

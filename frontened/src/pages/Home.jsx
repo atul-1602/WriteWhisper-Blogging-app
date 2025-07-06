@@ -99,7 +99,7 @@ const Home = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/register"
+                to="/signup"
                 className="btn-primary btn-lg group"
               >
                 Start Writing
@@ -330,7 +330,7 @@ const Home = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/register"
+                to="/signup"
                 className="btn bg-white text-primary-600 hover:bg-secondary-50 btn-lg"
               >
                 Get Started Today

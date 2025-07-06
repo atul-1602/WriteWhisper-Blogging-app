@@ -44,7 +44,7 @@ const CreateBlog = () => {
 
       const response = await api.post('/blogs', blogData);
       toast.success('Blog created successfully!');
-      navigate(`/blog/${response.data.data.slug}`);
+      navigate(`/blog/${response.data.data._id}`);
     } catch (error) {
       toast.error(error.response?.data?.error || 'Failed to create blog');
     } finally {

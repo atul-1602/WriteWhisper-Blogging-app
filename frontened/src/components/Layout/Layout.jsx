@@ -145,7 +145,7 @@ const Layout = ({ children }) => {
                   <Link to="/login" className="btn-outline btn-sm">
                     Login
                   </Link>
-                  <Link to="/register" className="btn-primary btn-sm">
+                  <Link to="/signup" className="btn-primary btn-sm">
                     Sign Up
                   </Link>
                 </div>

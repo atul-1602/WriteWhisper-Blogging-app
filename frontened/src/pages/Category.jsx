@@ -123,8 +123,8 @@ const Category = () => {
                       )}
                     </div>
                     <Link
-                      to={`/blog/${blog.slug}`}
-                      className="block"
+                      to={`/blog/${blog._id}`}
+                      className="block group"
                     >
                       <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2">
                         {blog.title}

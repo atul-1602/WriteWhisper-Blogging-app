@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       dispatch({ type: 'AUTH_START' });
-      const response = await api.post('/auth/register', userData);
+      const response = await api.post('/auth/signup', userData);
       
       dispatch({
         type: 'AUTH_SUCCESS',

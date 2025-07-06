@@ -23,21 +23,12 @@ const commentSchema = new mongoose.Schema({
   },
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: []
   }],
-  isEdited: {
-    type: Boolean,
-    default: false
-  },
-  editedAt: {
-    type: Date
-  },
   isDeleted: {
     type: Boolean,
     default: false
-  },
-  deletedAt: {
-    type: Date
   }
 }, {
   timestamps: true
@@ -45,12 +36,12 @@ const commentSchema = new mongoose.Schema({
 
 // Virtual for like count
 commentSchema.virtual('likeCount').get(function() {
-  return this.likes.length;
+  return this.likes ? this.likes.length : 0;
 });
 
 // Method to check if user liked the comment
 commentSchema.methods.isLikedBy = function(userId) {
-  return this.likes.includes(userId);
+  return this.likes && this.likes.includes(userId);
 };
 
 // Ensure virtuals are serialized
