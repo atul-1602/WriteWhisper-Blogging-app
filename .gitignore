@@ -1,0 +1,41 @@
+# Global ignores (both frontend & backend)
+node_modules/
+.env
+.env.local
+*.log
+*.env.*
+logs/
+*.pid
+*.seed
+debug.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor & IDE folders
+.vscode/
+.idea/
+
+# Frontend build / cache (React, Next.js, Vite, etc.)
+dist/
+build/
+.next/
+.out/
+.cache/
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Optional npm cache
+.npm/
+.pnpm-debug.log
+
+# Supabase generated folders (if using Supabase CLI)
+supabase/.temp/
+supabase/migrations/
+
+# MongoDB dump files
+dump/
