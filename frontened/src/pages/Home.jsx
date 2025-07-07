@@ -14,11 +14,13 @@ import {
   PenTool
 } from 'lucide-react';
 import api from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 
 const Home = () => {
   const [featuredBlogs, setFeaturedBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,13 +100,23 @@ const Home = () => {
               Create, connect, and inspire through the power of words.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/signup"
-                className="btn-primary btn-lg group"
-              >
-                Start Writing
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-              </Link>
+              {isAuthenticated ? (
+                <Link
+                  to="/dashboard"
+                  className="btn-primary btn-lg group"
+                >
+                  Go to Dashboard
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </Link>
+              ) : (
+                <Link
+                  to="/signup"
+                  className="btn-primary btn-lg group"
+                >
+                  Start Writing
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </Link>
+              )}
               <Link
                 to="/search"
                 className="btn-outline btn-lg"
@@ -329,12 +341,21 @@ const Home = () => {
               Join our community of writers and start sharing your knowledge, experiences, and insights with readers around the world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/signup"
-                className="btn bg-white text-primary-600 hover:bg-secondary-50 btn-lg"
-              >
-                Get Started Today
-              </Link>
+              {isAuthenticated ? (
+                <Link
+                  to="/dashboard"
+                  className="btn bg-white text-primary-600 hover:bg-secondary-50 btn-lg"
+                >
+                  Go to Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/signup"
+                  className="btn bg-white text-primary-600 hover:bg-secondary-50 btn-lg"
+                >
+                  Get Started Today
+                </Link>
+              )}
               <Link
                 to="/search"
                 className="btn border-2 border-white text-white hover:bg-white hover:text-primary-600 btn-lg"

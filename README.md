@@ -228,16 +228,22 @@ The platform uses comprehensive MongoDB schemas:
 - **Forms**: Validation and error states
 - **Navigation**: Responsive with mobile menu
 
-## 🚀 Deployment
+## 🚀 Production Deployment & Environment Variables
 
-### Backend Deployment
-1. Set up MongoDB Atlas or local MongoDB
-2. Configure environment variables
-3. Deploy to Heroku, Vercel, or AWS
+### Backend (.env)
+- `MONGODB_URI` — Your MongoDB connection string
+- `JWT_SECRET` — A strong secret for JWT signing
+- `PORT` — Port to run the backend (default: 3001)
 
-### Frontend Deployment
-1. Build the project: `npm run build`
-2. Deploy to Vercel, Netlify, or AWS S3
+**Never commit your .env file or secrets to version control!**
+
+### Frontend (.env)
+- `VITE_API_URL` — The full URL to your backend API (e.g. `https://yourdomain.com/api`)
+
+**For production:**
+- Build the frontend (`npm run build` in `frontened/`)
+- Serve the `dist/` folder from the backend (already handled in backend `index.js` for production)
+- Set all environment variables in your deployment platform (Vercel, Netlify, Heroku, etc.)
 
 ## 🤝 Contributing
 

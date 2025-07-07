@@ -188,7 +188,6 @@ const Layout = ({ children }) => {
                   </Link>
                 );
               })}
-              
               {isAuthenticated && (
                 <>
                   <hr className="my-2 border-secondary-200" />
@@ -217,6 +216,17 @@ const Layout = ({ children }) => {
                     <LogOut className="w-4 h-4" />
                     <span>Logout</span>
                   </button>
+                </>
+              )}
+              {!isAuthenticated && (
+                <>
+                  <hr className="my-2 border-secondary-200" />
+                  <Link to="/login" className="btn-outline btn-sm w-full block text-center mb-2" onClick={() => setIsMobileMenuOpen(false)}>
+                    Login
+                  </Link>
+                  <Link to="/signup" className="btn-primary btn-sm w-full block text-center" onClick={() => setIsMobileMenuOpen(false)}>
+                    Sign Up
+                  </Link>
                 </>
               )}
             </div>
