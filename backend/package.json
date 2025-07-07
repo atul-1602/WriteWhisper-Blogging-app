@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "build": "if [ -d '../frontened' ]; then cd ../frontened && npm install && npm run build && mkdir -p ../backend/public && cp -r dist/* ../backend/public/; else echo 'Frontend directory not found, skipping build'; fi",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

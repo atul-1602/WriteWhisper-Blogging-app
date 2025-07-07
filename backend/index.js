@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import fs from 'fs';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -100,11 +101,23 @@ app.use('/api/comments', commentRoutes);
 
 // Serve static files in productions
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(join(__dirname, '../frontened/dist')));
+  const publicPath = join(__dirname, 'public');
+  const indexPath = join(publicPath, 'index.html');
   
-  app.get('*', (req, res) => {
-    res.sendFile(join(__dirname, '../frontened/dist/index.html'));
-  });
+  // Check if public directory and index.html exist
+  try {
+    if (fs.existsSync(publicPath) && fs.existsSync(indexPath)) {
+      app.use(express.static(publicPath));
+      
+      app.get('*', (req, res) => {
+        res.sendFile(indexPath);
+      });
+    } else {
+      console.log('⚠️ Frontend build not found, serving API only');
+    }
+  } catch (error) {
+    console.log('⚠️ Error checking frontend build:', error.message);
+  }
 }
 
 // Error handling middleware
