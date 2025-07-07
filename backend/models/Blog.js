@@ -57,6 +57,10 @@ const blogSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  featured: {                        // ✅ Add this field
+    type: Boolean,
+    default: false
+  },
   likes: [{
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -79,6 +83,7 @@ const blogSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
 
 // Generate slug before saving
 blogSchema.pre('save', function(next) {
