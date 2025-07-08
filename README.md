@@ -1,249 +1,218 @@
-# WriteWhisper - Modern Blog Platform
+# WriteWhisper Blog Platform
 
-A beautiful, modern blog platform built with React, Node.js, and MongoDB. Share your thoughts, stories, and knowledge with the world through an intuitive and engaging user experience.
+A modern, full-stack blog platform built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **Node.js**. This project has been migrated from a React + Express setup to a unified Next.js application with integrated backend functionality.
 
-## ✨ Features
+## 🚀 Features
 
-### 🎨 Modern UI/UX
-- **Responsive Design**: Beautiful interface that works on all devices
-- **Dark/Light Mode**: Toggle between themes for comfortable reading
-- **Smooth Animations**: Framer Motion powered animations and transitions
-- **Modern Typography**: Clean, readable fonts with proper hierarchy
-- **Interactive Elements**: Hover effects, loading states, and micro-interactions
+- **Modern UI/UX**: Beautiful, responsive design with smooth animations
+- **Authentication**: Complete user authentication system with JWT
+- **Blog Management**: Create, edit, and manage blog posts
+- **Real-time Features**: Like, comment, and bookmark functionality
+- **Search & Filter**: Advanced search with category filtering
+- **User Profiles**: Personal profiles with avatar and bio
+- **Dark/Light Theme**: Toggle between themes
+- **Responsive Design**: Mobile-first approach
+- **TypeScript**: Full type safety throughout the application
+- **SEO Optimized**: Built-in SEO features with Next.js
 
-### 📝 Blog Management
-- **Rich Text Editor**: Create beautiful blog posts with markdown support
-- **Image Upload**: Drag & drop image uploads with Cloudinary integration
-- **Categories & Tags**: Organize content with categories and tags
-- **Draft System**: Save drafts and publish when ready
-- **SEO Optimization**: Meta tags, descriptions, and URL slugs
-
-### 👥 User Features
-- **User Authentication**: Secure login/register with JWT
-- **User Profiles**: Customizable profiles with avatars and bios
-- **Follow System**: Follow other writers and get updates
-- **Bookmarks**: Save your favorite articles for later
-- **Like/Dislike**: Engage with content through reactions
-
-### 💬 Social Features
-- **Comments System**: Nested comments with replies
-- **Real-time Updates**: Live notifications and updates
-- **Search & Filter**: Advanced search with filters
-- **Trending Content**: Discover popular and trending posts
-
-### 🔧 Technical Features
-- **RESTful API**: Clean, well-documented API endpoints
-- **Database Optimization**: Indexed queries and efficient data models
-- **Security**: Rate limiting, input validation, and XSS protection
-- **Performance**: Optimized loading and caching strategies
-
-## 🚀 Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
-- **React 18** - Modern React with hooks and context
-- **Vite** - Fast build tool and development server
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety and better developer experience
 - **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **React Router** - Client-side routing
-- **Axios** - HTTP client for API calls
-- **React Hot Toast** - Toast notifications
+- **Framer Motion** - Smooth animations and transitions
 - **Lucide React** - Beautiful icons
+- **React Hot Toast** - Toast notifications
+- **Axios** - HTTP client for API calls
 
 ### Backend
 - **Node.js** - JavaScript runtime
-- **Express.js** - Web application framework
+- **Express.js** - Web framework
 - **MongoDB** - NoSQL database
 - **Mongoose** - MongoDB object modeling
 - **JWT** - JSON Web Tokens for authentication
 - **bcryptjs** - Password hashing
-- **Express Validator** - Input validation
-- **Helmet** - Security middleware
-- **Rate Limiting** - API rate limiting
+- **multer** - File upload handling
+- **cors** - Cross-origin resource sharing
 
 ## 📁 Project Structure
 
 ```
-WriteWhisper/
-├── frontened/                 # React frontend
-│   ├── src/
-│   │   ├── components/        # Reusable components
-│   │   │   ├── Auth/         # Authentication components
-│   │   │   ├── Layout/       # Layout components
-│   │   │   └── UI/           # UI components
-│   │   ├── contexts/         # React contexts
-│   │   ├── hooks/            # Custom hooks
-│   │   ├── pages/            # Page components
-│   │   ├── services/         # API services
-│   │   ├── styles/           # Global styles
-│   │   └── utils/            # Utility functions
-│   ├── public/               # Static assets
-│   └── package.json
-├── backend/                   # Node.js backend
-│   ├── models/               # Database models
-│   ├── routes/               # API routes
-│   ├── middleware/           # Express middleware
-│   ├── controllers/          # Route controllers
-│   ├── services/             # Business logic
-│   └── package.json
-└── README.md
+writewhisper-blog/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── login/             # Authentication pages
+│   │   ├── signup/
+│   │   ├── dashboard/         # User dashboard
+│   │   ├── search/            # Blog search
+│   │   ├── profile/           # User profiles
+│   │   ├── blog/              # Blog pages
+│   │   ├── category/          # Category pages
+│   │   ├── globals.css        # Global styles
+│   │   ├── layout.tsx         # Root layout
+│   │   ├── page.tsx           # Home page
+│   │   └── not-found.tsx      # 404 page
+│   ├── components/            # Reusable components
+│   │   ├── Auth/             # Authentication components
+│   │   └── Layout/            # Layout components
+│   ├── contexts/              # React contexts
+│   │   ├── AuthContext.tsx    # Authentication context
+│   │   └── ThemeContext.tsx   # Theme context
+│   └── services/              # API services
+│       └── api.ts             # Axios configuration
+├── backend/                   # Express.js backend
+│   ├── controllers/           # Route controllers
+│   ├── middleware/            # Custom middleware
+│   ├── models/                # Mongoose models
+│   ├── routes/                # API routes
+│   ├── utils/                 # Utility functions
+│   ├── package.json           # Backend dependencies
+│   └── server.js              # Express server
+├── public/                    # Static assets
+├── package.json               # Frontend dependencies
+├── tailwind.config.ts         # Tailwind configuration
+├── tsconfig.json              # TypeScript configuration
+└── README.md                  # This file
 ```
 
-## 🛠️ Installation & Setup
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB (v5 or higher)
+
+- Node.js 18+ 
 - npm or yarn
+- MongoDB (local or Atlas)
 
-### Backend Setup
+### Installation
 
-1. **Navigate to backend directory**
+1. **Clone the repository**
    ```bash
-   cd backend
+   git clone <repository-url>
+   cd writewhisper-blog
    ```
 
-2. **Install dependencies**
+2. **Install all dependencies**
    ```bash
-   npm install
+   npm run install:all
    ```
 
-3. **Create environment file**
-   ```bash
-   cp .env.example .env
-   ```
-
-4. **Configure environment variables**
+3. **Set up environment variables**
+   
+   Create `.env.local` in the root directory:
    ```env
-   NODE_ENV=development
+   NEXT_PUBLIC_API_URL=http://localhost:3001/api
+   ```
+   
+   Create `.env` in the `backend` directory:
+   ```env
    PORT=3001
-   MONGODB_URI=mongodb://127.0.0.1:27017/writewhisper
-   JWT_SECRET=your-super-secret-jwt-key
-   FRONTEND_URL=http://localhost:3000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   NODE_ENV=development
    ```
 
-5. **Start the server**
+4. **Start the development servers**
    ```bash
-   npm run dev
+   # Start both frontend and backend
+   npm run dev:full
+   
+   # Or start them separately
+   npm run dev          # Frontend only (port 3000)
+   npm run dev:backend  # Backend only (port 3001)
    ```
 
-### Frontend Setup
+5. **Open your browser**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:3001
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd frontened
-   ```
+## 📝 Available Scripts
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start Next.js development server |
+| `npm run dev:backend` | Start Express backend server |
+| `npm run dev:full` | Start both frontend and backend |
+| `npm run build` | Build the Next.js application |
+| `npm run start` | Start production Next.js server |
+| `npm run start:backend` | Start production backend server |
+| `npm run lint` | Run ESLint |
+| `npm run install:backend` | Install backend dependencies |
+| `npm run install:all` | Install all dependencies |
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+## 🔧 Configuration
 
-4. **Open your browser**
-   Navigate to `http://localhost:3000`
+### Frontend Configuration
 
-## 📚 API Documentation
+The frontend uses Next.js 15 with the App Router. Key configurations:
 
-### Authentication Endpoints
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user
-- `PUT /api/auth/profile` - Update profile
+- **Tailwind CSS**: Configured with custom colors and components
+- **TypeScript**: Strict mode enabled
+- **ESLint**: Next.js recommended rules
+- **Framer Motion**: For animations
 
-### Blog Endpoints
-- `GET /api/blogs` - Get all blogs
-- `GET /api/blogs/:id` - Get single blog
-- `POST /api/blogs` - Create new blog
-- `PUT /api/blogs/:id` - Update blog
-- `DELETE /api/blogs/:id` - Delete blog
-- `POST /api/blogs/:id/like` - Like/unlike blog
-- `POST /api/blogs/:id/bookmark` - Bookmark blog
+### Backend Configuration
 
-### User Endpoints
-- `GET /api/users/:username` - Get user profile
-- `POST /api/users/:id/follow` - Follow/unfollow user
-- `GET /api/users/bookmarks` - Get user bookmarks
+The backend is a standard Express.js application with:
 
-### Category Endpoints
-- `GET /api/categories` - Get all categories
-- `GET /api/categories/:slug` - Get category with blogs
+- **MongoDB**: Database connection with Mongoose
+- **JWT**: Authentication middleware
+- **CORS**: Cross-origin requests enabled
+- **File Upload**: Multer for image uploads
 
-### Comment Endpoints
-- `GET /api/comments/blog/:blogId` - Get blog comments
-- `POST /api/comments` - Add comment
-- `PUT /api/comments/:id` - Update comment
-- `DELETE /api/comments/:id` - Delete comment
-- `POST /api/comments/:id/like` - Like comment
+## 🎨 Customization
 
-## 🎯 Key Features Explained
+### Styling
 
-### Database Schema
-The platform uses comprehensive MongoDB schemas:
+The project uses Tailwind CSS with custom design tokens:
 
-- **User Model**: Username, email, password, profile info, social links, followers
-- **Blog Model**: Title, content, author, categories, tags, likes, comments, views
-- **Comment Model**: Content, user, blog, replies, likes
-- **Category Model**: Name, description, color, blog count
+- **Colors**: Primary, secondary, and accent color palettes
+- **Components**: Pre-built button, input, card components
+- **Animations**: Custom keyframes and transitions
 
-### Authentication System
-- JWT-based authentication with refresh tokens
+### Themes
+
+The application supports light and dark themes with automatic system preference detection.
+
+## 🔒 Authentication
+
+The authentication system includes:
+
+- User registration and login
+- JWT token management
+- Protected routes
 - Password hashing with bcrypt
-- Role-based access control (user, admin, moderator)
-- Account verification and activation
+- Token refresh functionality
 
-### Content Management
-- Rich text editor with markdown support
-- Image upload with Cloudinary integration
-- Draft and publish workflow
-- SEO optimization with meta tags
+## 📱 Responsive Design
 
-### Social Features
-- Follow/unfollow system
-- Like and dislike functionality
-- Bookmark system
-- Nested comments with replies
-- Real-time notifications
+The application is fully responsive with:
 
-## 🎨 Design System
+- Mobile-first approach
+- Breakpoint-specific layouts
+- Touch-friendly interactions
+- Optimized images and assets
 
-### Color Palette
-- **Primary**: Blue (#3B82F6) - Main brand color
-- **Secondary**: Gray (#64748B) - Text and UI elements
-- **Accent**: Purple (#D946EF) - Highlights and CTAs
-- **Success**: Green (#10B981) - Success states
-- **Error**: Red (#EF4444) - Error states
+## 🚀 Deployment
 
-### Typography
-- **Inter** - Primary font for UI elements
-- **Merriweather** - Serif font for blog content
-- **JetBrains Mono** - Monospace font for code
+### Frontend Deployment
 
-### Components
-- **Buttons**: Primary, secondary, outline, ghost variants
-- **Cards**: Hover effects and shadows
-- **Forms**: Validation and error states
-- **Navigation**: Responsive with mobile menu
+The Next.js application can be deployed to:
 
-## 🚀 Production Deployment & Environment Variables
+- **Vercel** (recommended)
+- **Netlify**
+- **AWS Amplify**
+- Any Node.js hosting platform
 
-### Backend (.env)
-- `MONGODB_URI` — Your MongoDB connection string
-- `JWT_SECRET` — A strong secret for JWT signing
-- `PORT` — Port to run the backend (default: 3001)
+### Backend Deployment
 
-**Never commit your .env file or secrets to version control!**
+The Express.js backend can be deployed to:
 
-### Frontend (.env)
-- `VITE_API_URL` — The full URL to your backend API (e.g. `https://yourdomain.com/api`)
-
-**For production:**
-- Build the frontend (`npm run build` in `frontened/`)
-- Serve the `dist/` folder from the backend (already handled in backend `index.js` for production)
-- Set all environment variables in your deployment platform (Vercel, Netlify, Heroku, etc.)
+- **Railway**
+- **Heroku**
+- **DigitalOcean**
+- **AWS EC2**
+- Any Node.js hosting platform
 
 ## 🤝 Contributing
 
@@ -255,21 +224,28 @@ The platform uses comprehensive MongoDB schemas:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- Icons by [Lucide](https://lucide.dev/)
-- UI components inspired by modern design systems
-- Animation library by [Framer Motion](https://www.framer.com/motion/)
+If you encounter any issues or have questions:
 
-## 📞 Support
+1. Check the existing issues
+2. Create a new issue with detailed information
+3. Contact the development team
 
-For support and questions:
-- Create an issue on GitHub
-- Email: support@writewhisper.com
-- Documentation: [docs.writewhisper.com](https://docs.writewhisper.com)
+## 🔄 Migration Notes
+
+This project was migrated from a React + Express setup to Next.js. Key changes:
+
+- **Routing**: React Router → Next.js App Router
+- **State Management**: React Context (maintained)
+- **Styling**: Tailwind CSS (maintained)
+- **API Calls**: Axios (maintained)
+- **Authentication**: JWT (maintained)
+
+The backend remains largely unchanged, ensuring API compatibility.
 
 ---
 
-**WriteWhisper** - Share your thoughts with the world ✨ 
+**Built with ❤️ by the WriteWhisper Team** 
