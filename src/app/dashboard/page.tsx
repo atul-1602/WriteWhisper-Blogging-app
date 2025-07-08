@@ -13,20 +13,27 @@ interface Blog {
   title: string;
   excerpt: string;
   coverImage?: string;
-  category: string;
+  category: {
+    _id: string;
+    name: string;
+    color: string;
+  };
   featured: boolean;
   readTime: number;
   views: number;
   likeCount: number;
   commentCount: number;
+  likes: Array<{ user: string; createdAt: string }>;
   createdAt: string;
   status: string;
+  slug: string;
 }
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState({
     totalBlogs: 0,
     totalViews: 0,
@@ -36,7 +43,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      if (!isAuthenticated) {
+        setLoading(false);
+        return;
+      }
+
       try {
+        setError(null);
         const [blogsResponse, statsResponse] = await Promise.all([
           api.get('/blogs/my-blogs'),
           api.get('/blogs/my-stats')
@@ -44,20 +57,40 @@ const Dashboard = () => {
 
         setBlogs(blogsResponse.data.data);
         setStats(statsResponse.data.data);
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('Error fetching dashboard data:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Failed to fetch dashboard data';
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
     };
 
     fetchDashboardData();
-  }, []);
+  }, [isAuthenticated]);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="spinner w-12 h-12"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <BookOpen className="w-16 h-16 text-secondary-300 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-secondary-900 mb-2">Error Loading Dashboard</h1>
+          <p className="text-secondary-600 mb-6">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="btn-primary"
+          >
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }
@@ -187,10 +220,10 @@ const Dashboard = () => {
                         <h3 className="font-medium text-secondary-900 mb-1">{blog.title}</h3>
                         <p className="text-sm text-secondary-600 line-clamp-2">{blog.excerpt}</p>
                         <div className="flex items-center space-x-4 mt-2 text-xs text-secondary-500">
-                          <span className="badge-secondary">{blog.category}</span>
+                          <span className="badge-secondary">{blog.category.name}</span>
                           <div className="flex items-center space-x-1">
                             <Clock className="w-3 h-3" />
-                            <span>{blog.readTime} min read</span>
+                            <span>{blog.readTime || 5} min read</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             <Eye className="w-3 h-3" />
@@ -198,7 +231,7 @@ const Dashboard = () => {
                           </div>
                           <div className="flex items-center space-x-1">
                             <Heart className="w-3 h-3" />
-                            <span>{blog.likeCount}</span>
+                            <span>{blog.likeCount || blog.likes?.length || 0}</span>
                           </div>
                         </div>
                       </div>
@@ -206,6 +239,12 @@ const Dashboard = () => {
                         <span className={`badge ${blog.status === 'published' ? 'badge-primary' : 'badge-secondary'}`}>
                           {blog.status}
                         </span>
+                        <Link
+                          href={`/blog/${blog.slug}`}
+                          className="btn-outline btn-sm"
+                        >
+                          View
+                        </Link>
                         <Link
                           href={`/edit-blog/${blog._id}`}
                           className="btn-outline btn-sm"

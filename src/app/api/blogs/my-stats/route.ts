@@ -1,39 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
 import BlogModel from '../../../../lib/models/Blog';
-import { protect } from '../../../../lib/middleware/auth';
+import { protect, AuthenticatedRequest } from '../../../../lib/middleware/auth';
 
 export async function GET(request: NextRequest) {
   try {
     // Use the protect middleware
-    const authResult = await protect(request as any);
+    const authResult = await protect(request as AuthenticatedRequest);
     if (authResult) {
       return authResult;
     }
 
-    const user = (request as any).user;
+    const user = (request as AuthenticatedRequest).user;
 
     // Get user's blog statistics
-    const [totalBlogs, totalViews, totalLikes, totalComments] = await Promise.all([
-      BlogModel.countDocuments({ author: user._id, isDeleted: false }),
-      BlogModel.aggregate([
-        { $match: { author: user._id, isDeleted: false } },
-        { $group: { _id: null, totalViews: { $sum: '$views' } } }
-      ]),
-      BlogModel.aggregate([
-        { $match: { author: user._id, isDeleted: false } },
-        { $group: { _id: null, totalLikes: { $sum: { $size: '$likes' } } } }
-      ]),
-      BlogModel.aggregate([
-        { $match: { author: user._id, isDeleted: false } },
-        { $group: { _id: null, totalComments: { $sum: { $size: '$comments' } } } }
-      ])
+    const totalBlogs = await BlogModel.countDocuments({ author: user._id, isDeleted: false });
+    
+    // Get total views
+    const viewsResult = await BlogModel.aggregate([
+      { $match: { author: user._id, isDeleted: false } },
+      { $group: { _id: null, totalViews: { $sum: '$views' } } }
     ]);
+    const totalViews = viewsResult.length > 0 ? viewsResult[0].totalViews : 0;
+    
+    // Get total likes
+    const likesResult = await BlogModel.aggregate([
+      { $match: { author: user._id, isDeleted: false } },
+      { $group: { _id: null, totalLikes: { $sum: { $size: { $ifNull: ['$likes', []] } } } } }
+    ]);
+    const totalLikes = likesResult.length > 0 ? likesResult[0].totalLikes : 0;
+    
+    // Get total comments
+    const commentsResult = await BlogModel.aggregate([
+      { $match: { author: user._id, isDeleted: false } },
+      { $group: { _id: null, totalComments: { $sum: { $size: { $ifNull: ['$comments', []] } } } } }
+    ]);
+    const totalComments = commentsResult.length > 0 ? commentsResult[0].totalComments : 0;
 
     const stats = {
       totalBlogs,
-      totalViews: totalViews[0]?.totalViews || 0,
-      totalLikes: totalLikes[0]?.totalLikes || 0,
-      totalComments: totalComments[0]?.totalComments || 0
+      totalViews,
+      totalLikes,
+      totalComments
     };
 
     return NextResponse.json({
