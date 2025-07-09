@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
@@ -52,7 +52,7 @@ interface Category {
   blogCount: number;
 }
 
-const SearchPage = () => {
+const SearchPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -572,6 +572,18 @@ const SearchPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const SearchPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-secondary-50">
+        <div className="spinner w-12 h-12"></div>
+      </div>
+    }>
+      <SearchPageContent />
+    </Suspense>
   );
 };
 
