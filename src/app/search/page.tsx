@@ -353,7 +353,7 @@ const SearchPage = () => {
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        className="grid grid-cols-1 md:grid-cols-2 gap-6"
                       >
                         {blogs.map((blog) => (
                           <Link
@@ -363,18 +363,19 @@ const SearchPage = () => {
                           >
                             <motion.article
                               variants={itemVariants}
-                              className="bg-white rounded-lg shadow-soft border border-secondary-200 overflow-hidden hover:shadow-medium transition-shadow duration-300 h-full"
+                              className="card-hover group h-full min-h-[450px] flex flex-col relative overflow-hidden"
                             >
                               {blog.coverImage && (
-                                <div className="aspect-video overflow-hidden">
+                                <div className="aspect-video overflow-hidden relative">
                                   <img
                                     src={blog.coverImage}
                                     alt={blog.title}
-                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                   />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 </div>
                               )}
-                              <div className="p-6">
+                              <div className="p-6 flex flex-col flex-1 relative">
                                 <div className="flex items-center gap-2 mb-3">
                                   <span 
                                     className="badge text-xs"
@@ -392,47 +393,49 @@ const SearchPage = () => {
                                   </span>                                  
                                   )}
                                 </div>
-                                <h3 className="text-lg font-semibold text-secondary-900 mb-2 line-clamp-2 hover:text-primary-600 transition-colors duration-200">
+                                <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2 leading-tight">
                                   {blog.title}
                                 </h3>
-                                <p className="text-secondary-600 text-sm mb-4 line-clamp-3">
+                                <p className="text-secondary-600 mb-4 line-clamp-3 leading-relaxed">
                                   {blog.excerpt}
                                 </p>
-                                <div className="flex items-center justify-between text-xs text-secondary-500 mb-4">
-                                  <div className="flex items-center space-x-3">
-                                    <div className="flex items-center space-x-1">
-                                      <Clock className="w-3 h-3" />
-                                      <span>{blog.readTime} min</span>
+                                <div className="mt-auto pt-4 border-t border-secondary-200">
+                                  <div className="flex items-center justify-between text-sm text-secondary-500 mb-3">
+                                    <div className="flex items-center space-x-4">
+                                      <div className="flex items-center space-x-1">
+                                        <Clock className="w-4 h-4" />
+                                        <span>{blog.readTime || 5} min read</span>
+                                      </div>
+                                      <div className="flex items-center space-x-1">
+                                        <Eye className="w-4 h-4" />
+                                        <span>{blog.views}</span>
+                                      </div>
                                     </div>
-                                    <div className="flex items-center space-x-1">
-                                      <Eye className="w-3 h-3" />
-                                      <span>{blog.views}</span>
+                                    <div className="flex items-center space-x-3">
+                                      <div className="flex items-center space-x-1">
+                                        <Heart className="w-4 h-4" />
+                                        <span>{blog.likeCount || 0}</span>
+                                      </div>
+                                      <div className="flex items-center space-x-1">
+                                        <MessageCircle className="w-4 h-4" />
+                                        <span>{blog.commentCount || 0}</span>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="flex items-center space-x-3">
-                                    <div className="flex items-center space-x-1">
-                                      <Heart className="w-3 h-3" />
-                                      <span>{blog.likeCount}</span>
-                                    </div>
-                                    <div className="flex items-center space-x-1">
-                                      <MessageCircle className="w-3 h-3" />
-                                      <span>{blog.commentCount}</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="flex items-center space-x-3 pt-3 border-t border-secondary-200">
                                   <img
                                     src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
                                     alt={blog.author?.firstName}
-                                    className="w-6 h-6 rounded-full"
+                                    className="w-8 h-8 rounded-full ring-2 ring-secondary-200"
                                   />
                                   <div>
-                                    <div className="text-xs font-medium text-secondary-900">
+                                    <div className="text-sm font-medium text-secondary-900">
                                       {blog.author?.firstName} {blog.author?.lastName}
                                     </div>
                                     <div className="text-xs text-secondary-500">
                                       {formatDate(blog.createdAt)}
                                     </div>
+                                  </div>
                                   </div>
                                 </div>
                               </div>
@@ -458,16 +461,17 @@ const SearchPage = () => {
                           >
                             <motion.article
                               variants={itemVariants}
-                              className="bg-white rounded-lg shadow-soft border border-secondary-200 p-6 hover:shadow-medium transition-shadow duration-300"
+                              className="card-hover group p-6 hover:shadow-medium transition-shadow duration-300"
                             >
                               <div className="flex gap-6">
                                 {blog.coverImage && (
-                                  <div className="w-32 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                                  <div className="w-32 h-24 rounded-lg overflow-hidden flex-shrink-0 relative">
                                     <img
                                       src={blog.coverImage}
                                       alt={blog.title}
-                                      className="w-full h-full object-cover"
+                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                     />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                   </div>
                                 )}
                                 <div className="flex-1 min-w-0">
@@ -494,11 +498,11 @@ const SearchPage = () => {
                                   <p className="text-secondary-600 mb-3 line-clamp-2">
                                     {blog.excerpt}
                                   </p>
-                                  <div className="flex items-center justify-between">
+                                  <div className="flex items-center justify-between pt-3 border-t border-secondary-200">
                                     <div className="flex items-center space-x-4 text-sm text-secondary-500">
                                       <div className="flex items-center space-x-1">
                                         <Clock className="w-4 h-4" />
-                                        <span>{blog.readTime} min read</span>
+                                        <span>{blog.readTime || 5} min read</span>
                                       </div>
                                       <div className="flex items-center space-x-1">
                                         <Eye className="w-4 h-4" />
@@ -506,18 +510,18 @@ const SearchPage = () => {
                                       </div>
                                       <div className="flex items-center space-x-1">
                                         <Heart className="w-4 h-4" />
-                                        <span>{blog.likeCount} likes</span>
+                                        <span>{blog.likeCount || 0} likes</span>
                                       </div>
                                       <div className="flex items-center space-x-1">
                                         <MessageCircle className="w-4 h-4" />
-                                        <span>{blog.commentCount} comments</span>
+                                        <span>{blog.commentCount || 0} comments</span>
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
                                       <img
                                         src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
                                         alt={blog.author?.firstName}
-                                        className="w-8 h-8 rounded-full"
+                                        className="w-8 h-8 rounded-full ring-2 ring-secondary-200"
                                       />
                                       <div>
                                         <div className="text-sm font-medium text-secondary-900">

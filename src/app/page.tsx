@@ -318,7 +318,7 @@ const Home = () => {
               >
                 <motion.article
                   variants={itemVariants}
-                  className="card-hover group h-full relative overflow-hidden"
+                  className="card-hover group h-full min-h-[450px] flex flex-col relative overflow-hidden"
                 >
                   {blog.coverImage && (
                     <div className="aspect-video overflow-hidden relative">
@@ -330,7 +330,7 @@ const Home = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                   )}
-                  <div className="p-6 relative">
+                  <div className="p-6 flex flex-col flex-1 relative">
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
                       <span className="badge-primary">
                         {blog.category.name}
@@ -340,7 +340,6 @@ const Home = () => {
                         <TrendingUp className="w-3 h-3 mr-1" />
                         Featured
                       </span>
-                      
                       )}
                     </div>
                     <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2 leading-tight">
@@ -349,29 +348,29 @@ const Home = () => {
                     <p className="text-secondary-600 mb-4 line-clamp-3 leading-relaxed">
                       {blog.excerpt}
                     </p>
-                    <div className="flex items-center justify-between text-sm text-secondary-500">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex items-center space-x-1">
-                          <Clock className="w-4 h-4" />
-                          <span>{blog.readTime || 5} min read</span>
+                    <div className="mt-auto pt-4 border-t border-secondary-200">
+                      <div className="flex items-center justify-between text-sm text-secondary-500 mb-3">
+                        <div className="flex items-center space-x-4">
+                          <div className="flex items-center space-x-1">
+                            <Clock className="w-4 h-4" />
+                            <span>{blog.readTime || 5} min read</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <Eye className="w-4 h-4" />
+                            <span>{blog.views}</span>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-1">
-                          <Eye className="w-4 h-4" />
-                          <span>{blog.views}</span>
+                        <div className="flex items-center space-x-3">
+                          <div className="flex items-center space-x-1">
+                            <Heart className="w-4 h-4" />
+                            <span>{blog.likeCount || blog.likes?.length || 0}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <MessageCircle className="w-4 h-4" />
+                            <span>{blog.commentCount || 0}</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <div className="flex items-center space-x-1">
-                          <Heart className="w-4 h-4" />
-                          <span>{blog.likeCount || blog.likes?.length || 0}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <MessageCircle className="w-4 h-4" />
-                          <span>{blog.commentCount || 0}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-secondary-200">
                       <div className="flex items-center space-x-3">
                         <img
                           src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
