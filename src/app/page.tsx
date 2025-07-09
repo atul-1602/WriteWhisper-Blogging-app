@@ -261,7 +261,7 @@ const Home = () => {
                       <PenTool className="w-8 h-8" />
                     </div>
                     <h3 className="font-semibold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors duration-200">
-                      {category.name}
+                      {category?.name || 'Uncategorized'}
                     </h3>
                     <p className="text-sm text-secondary-600 font-medium">
                       {category.blogCount} blogs
@@ -313,7 +313,7 @@ const Home = () => {
             {featuredBlogs.map((blog) => (
               <Link
                 key={blog._id}
-                href={`/blog/${blog.slug}`}
+                href={`/blog/${blog.slug || 'untitled'}`}
                 className="block"
               >
                 <motion.article
@@ -324,7 +324,7 @@ const Home = () => {
                     <div className="aspect-video overflow-hidden relative">
                       <img
                         src={blog.coverImage}
-                        alt={blog.title}
+                        alt={blog.title || 'Blog post'}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -333,7 +333,7 @@ const Home = () => {
                   <div className="p-6 flex flex-col flex-1 relative">
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
                       <span className="badge-primary">
-                        {blog.category.name}
+                        {blog.category?.name || 'Uncategorized'}
                       </span>
                       {blog.featured && (
                         <span className="badge-accent inline-flex items-center">
@@ -343,10 +343,10 @@ const Home = () => {
                       )}
                     </div>
                     <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2 leading-tight">
-                      {blog.title}
+                      {blog.title || 'Untitled Blog'}
                     </h3>
                     <p className="text-secondary-600 mb-4 line-clamp-3 leading-relaxed">
-                      {blog.excerpt}
+                      {blog.excerpt || 'No excerpt available.'}
                     </p>
                     <div className="mt-auto pt-4 border-t border-secondary-200">
                       <div className="flex items-center justify-between text-sm text-secondary-500 mb-3">
@@ -373,13 +373,13 @@ const Home = () => {
                       </div>
                       <div className="flex items-center space-x-3">
                         <img
-                          src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
-                          alt={blog.author?.firstName}
+                          src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName || 'User'}+${blog.author?.lastName || ''}&background=3b82f6&color=fff`}
+                          alt={blog.author?.firstName || 'User'}
                           className="w-8 h-8 rounded-full ring-2 ring-secondary-200"
                         />
                         <div>
                           <div className="text-sm font-medium text-secondary-900">
-                            {blog.author?.firstName} {blog.author?.lastName}
+                            {blog.author?.firstName || 'Anonymous'} {blog.author?.lastName || ''}
                           </div>
                           <div className="text-xs text-secondary-500">
                             {new Date(blog.createdAt).toLocaleDateString()}

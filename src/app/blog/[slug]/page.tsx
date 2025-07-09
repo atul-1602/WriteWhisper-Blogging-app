@@ -278,10 +278,10 @@ const BlogDetailPage = () => {
             {/* Category and Featured Badge */}
             <div className="flex items-center gap-3 mb-6">
               <Link
-                href={`/category/${blog.category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                href={`/category/${blog.category?.name?.toLowerCase().replace(/\s+/g, '-') || 'uncategorized'}`}
                 className="badge-primary text-sm shadow-soft hover:shadow-medium"
               >
-                {blog.category.name}
+                {blog.category?.name || 'Uncategorized'}
               </Link>
               {blog.featured && (
                 <span className="badge-accent text-sm shadow-soft hover:shadow-medium inline-flex items-center">
@@ -293,12 +293,12 @@ const BlogDetailPage = () => {
 
             {/* Title */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 mb-6 leading-tight">
-              {blog.title}
+              {blog.title || 'Untitled Blog'}
             </h1>
 
             {/* Excerpt */}
             <p className="text-xl text-secondary-600 mb-8 leading-relaxed">
-              {blog.excerpt}
+              {blog.excerpt || 'No excerpt available.'}
             </p>
 
             {/* Author and Meta Info */}
@@ -306,15 +306,15 @@ const BlogDetailPage = () => {
               <div className="flex items-center space-x-4">
                 <div className="relative">
                   <img
-                    src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
-                    alt={`${blog.author?.firstName} ${blog.author?.lastName}`}
+                    src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName || 'User'}+${blog.author?.lastName || ''}&background=3b82f6&color=fff`}
+                    alt={`${blog.author?.firstName || 'User'} ${blog.author?.lastName || ''}`}
                     className="w-14 h-14 rounded-full ring-3 ring-secondary-200 shadow-soft"
                   />
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full border-2 border-white"></div>
                 </div>
                 <div>
                   <p className="font-semibold text-secondary-900 text-lg">
-                    {blog.author?.firstName} {blog.author?.lastName}
+                    {blog.author?.firstName || 'Anonymous'} {blog.author?.lastName || ''}
                   </p>
                   <p className="text-sm text-secondary-600">
                     {formatDate(blog.createdAt)}
@@ -346,7 +346,7 @@ const BlogDetailPage = () => {
               <div className="relative overflow-hidden rounded-2xl shadow-soft">
                 <img
                   src={blog.coverImage}
-                  alt={blog.title}
+                  alt={blog.title || 'Blog post'}
                   className="w-full h-64 md:h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -363,7 +363,7 @@ const BlogDetailPage = () => {
           >
             <div 
               className="text-lg leading-relaxed text-secondary-800"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
+              dangerouslySetInnerHTML={{ __html: blog.content || 'No content available.' }}
             />
           </motion.div>
 
@@ -380,7 +380,7 @@ const BlogDetailPage = () => {
                 <span className="font-semibold text-secondary-900">Tags:</span>
               </div>
               <div className="flex flex-wrap gap-3">
-                {blog.tags.map((tag, index) => (
+                {blog.tags?.map((tag, index) => (
                   <span
                     key={index}
                     className="px-4 py-2 bg-gradient-to-r from-primary-50 to-accent-50 text-primary-700 rounded-xl text-sm font-medium hover:from-primary-100 hover:to-accent-100 transition-all duration-200 shadow-soft hover:shadow-medium"
@@ -453,16 +453,16 @@ const BlogDetailPage = () => {
             >
               <div className="flex items-start space-x-4">
                 <img
-                  src={blog.author.avatar || `https://ui-avatars.com/api/?name=${blog.author.firstName}+${blog.author.lastName}&background=3b82f6&color=fff`}
-                  alt={`${blog.author.firstName} ${blog.author.lastName}`}
+                  src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName || 'User'}+${blog.author?.lastName || ''}&background=3b82f6&color=fff`}
+                  alt={`${blog.author?.firstName || 'User'} ${blog.author?.lastName || ''}`}
                   className="w-16 h-16 rounded-full ring-2 ring-secondary-200"
                 />
                 <div>
                   <h3 className="text-lg font-semibold text-secondary-900 mb-2">
-                    About {blog.author.firstName} {blog.author.lastName}
+                    About {blog.author?.firstName || 'Anonymous'} {blog.author?.lastName || ''}
                   </h3>
                   <p className="text-secondary-600 leading-relaxed">
-                    {blog.author.bio}
+                    {blog.author?.bio || 'No bio available.'}
                   </p>
                 </div>
               </div>

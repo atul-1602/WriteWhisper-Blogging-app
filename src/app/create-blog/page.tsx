@@ -373,7 +373,7 @@ const CreateBlog = () => {
                     <option value="">Select a category</option>
                     {categories.map((category) => (
                       <option key={category._id} value={category._id}>
-                        {category.name}
+                        {category?.name || 'Uncategorized'}
                       </option>
                     ))}
                   </select>
@@ -440,7 +440,7 @@ const CreateBlog = () => {
                       <div className="flex items-center space-x-4 text-sm text-secondary-500">
                         <div className="flex items-center space-x-1">
                           <BookOpen className="w-4 h-4" />
-                          <span>{formData.category ? categories.find(c => c._id === formData.category)?.name : 'Category'}</span>
+                          <span>{formData.category ? categories.find(c => c._id === formData.category)?.name || 'Category' : 'Category'}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                           <Clock className="w-4 h-4" />

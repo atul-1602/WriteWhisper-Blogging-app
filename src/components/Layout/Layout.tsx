@@ -135,12 +135,12 @@ const Layout = ({ children }: LayoutProps) => {
                         className="flex items-center space-x-2 p-2 rounded-xl hover:bg-gradient-to-r from-primary-50 to-accent-50 transition-all duration-200 shadow-soft hover:shadow-medium"
                       >
                         <img
-                          src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.firstName}+${user?.lastName}&background=3b82f6&color=fff`}
-                          alt={`${user?.firstName} ${user?.lastName}`}
+                          src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.firstName || 'User'}+${user?.lastName || ''}&background=3b82f6&color=fff`}
+                          alt={`${user?.firstName || 'User'} ${user?.lastName || ''}`}
                           className="w-8 h-8 rounded-full ring-2 ring-secondary-200"
                         />
                         <span className="hidden sm:block text-sm font-medium text-secondary-700">
-                          {user?.firstName} {user?.lastName}
+                          {user?.firstName || 'User'} {user?.lastName || ''}
                         </span>
                       </motion.button>
 

@@ -184,11 +184,11 @@ const CategoryPage = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-4">
-              {category.name}
+              {category?.name || 'Category'}
             </h1>
             
             <p className="text-lg text-secondary-600 max-w-2xl mx-auto mb-6">
-              {category.description}
+              {category?.description || 'No description available.'}
             </p>
             
             <div className="flex items-center justify-center space-x-6 text-sm text-secondary-500">
@@ -281,10 +281,10 @@ const CategoryPage = () => {
           className="mb-8"
         >
           <h2 className="text-2xl font-semibold text-secondary-900 mb-2">
-            {loading ? 'Loading...' : `${pagination.total} blogs in ${category.name}`}
+            {loading ? 'Loading...' : `${pagination.total} blogs in ${category?.name || 'this category'}`}
           </h2>
           <p className="text-secondary-600">
-            Discover amazing content in the {category.name.toLowerCase()} category
+            Discover amazing content in the {category?.name?.toLowerCase() || 'this'} category
           </p>
         </motion.div>
 
@@ -313,7 +313,7 @@ const CategoryPage = () => {
             <BookOpen className="w-16 h-16 text-secondary-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-secondary-900 mb-2">No blogs yet</h3>
             <p className="text-secondary-600 mb-6">
-              Be the first to write a blog in the {category.name} category!
+              Be the first to write a blog in the {category?.name || 'this'} category!
             </p>
               <Link href="/create-blog" className="btn-primary inline-flex items-center rounded-full p-2">
                 Write a Blog
@@ -332,7 +332,7 @@ const CategoryPage = () => {
             {blogs.map((blog) => (
               <Link
                 key={blog._id}
-                href={`/blog/${blog.slug}`}
+                href={`/blog/${blog.slug || 'untitled'}`}
                 className="block"
               >
                 <motion.article
@@ -348,7 +348,7 @@ const CategoryPage = () => {
                         <div className="relative overflow-hidden rounded-t-lg">
                           <img
                             src={blog.coverImage}
-                            alt={blog.title}
+                            alt={blog.title || 'Blog post'}
                             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                           {blog.featured && (
@@ -367,11 +367,11 @@ const CategoryPage = () => {
                           <span 
                             className="badge text-xs"
                             style={{ 
-                              backgroundColor: blog.category.color + '20', 
-                              color: blog.category.color 
+                              backgroundColor: blog.category?.color + '20', 
+                              color: blog.category?.color 
                             }}
                           >
-                            {blog.category.name}
+                            {blog.category?.name || 'Uncategorized'}
                           </span>
                           {blog.featured && !blog.coverImage && (
                             <span className="badge-accent text-xs">
@@ -382,11 +382,11 @@ const CategoryPage = () => {
                         </div>
                         
                         <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2">
-                          {blog.title}
+                          {blog.title || 'Untitled Blog'}
                         </h3>
                         
                         <p className="text-secondary-600 mb-4 line-clamp-3">
-                          {blog.excerpt}
+                          {blog.excerpt || 'No excerpt available.'}
                         </p>
                         
                         <div className="flex items-center justify-between text-sm text-secondary-500">
@@ -419,7 +419,7 @@ const CategoryPage = () => {
                         <div className="relative w-48 h-32 flex-shrink-0">
                           <img
                             src={blog.coverImage}
-                            alt={blog.title}
+                            alt={blog.title || 'Blog post'}
                             className="w-full h-full object-cover rounded-lg"
                           />
                           {blog.featured && (
@@ -438,11 +438,11 @@ const CategoryPage = () => {
                           <span 
                             className="badge text-xs"
                             style={{ 
-                              backgroundColor: blog.category.color + '20', 
-                              color: blog.category.color 
+                              backgroundColor: blog.category?.color + '20', 
+                              color: blog.category?.color 
                             }}
                           >
-                            {blog.category.name}
+                            {blog.category?.name || 'Uncategorized'}
                           </span>
                           {blog.featured && (
                             <span className="badge-accent text-xs">
@@ -453,11 +453,11 @@ const CategoryPage = () => {
                         </div>
                         
                         <h3 className="text-2xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200">
-                          {blog.title}
+                          {blog.title || 'Untitled Blog'}
                         </h3>
                         
                         <p className="text-secondary-600 mb-4 line-clamp-2">
-                          {blog.excerpt}
+                          {blog.excerpt || 'No excerpt available.'}
                         </p>
                         
                         <div className="flex items-center justify-between text-sm text-secondary-500">

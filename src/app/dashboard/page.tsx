@@ -109,7 +109,7 @@ const Dashboard = () => {
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-3xl font-bold text-secondary-900 mb-2">
-                  Welcome back, {user?.firstName} {user?.lastName}!
+                  Welcome back, {user?.firstName || 'User'} {user?.lastName || ''}!
                 </h1>
                 <p className="text-secondary-600">
                   Here&apos;s what&apos;s happening with your blog
@@ -214,15 +214,15 @@ const Dashboard = () => {
                       {blog.coverImage && (
                         <img
                           src={blog.coverImage}
-                          alt={blog.title}
+                          alt={blog.title || 'Blog post'}
                           className="w-16 h-16 object-cover rounded-lg"
                         />
                       )}
                       <div className="flex-1">
-                        <h3 className="font-medium text-secondary-900 mb-1">{blog.title}</h3>
-                        <p className="text-sm text-secondary-600 line-clamp-2">{blog.excerpt}</p>
+                        <h3 className="font-medium text-secondary-900 mb-1">{blog.title || 'Untitled Blog'}</h3>
+                        <p className="text-sm text-secondary-600 line-clamp-2">{blog.excerpt || 'No excerpt available.'}</p>
                         <div className="flex items-center space-x-4 mt-2 text-xs text-secondary-500">
-                          <span className="badge-secondary">{blog.category.name}</span>
+                          <span className="badge-secondary">{blog.category?.name || 'Uncategorized'}</span>
                           <div className="flex items-center space-x-1">
                             <Clock className="w-3 h-3" />
                             <span>{blog.readTime || 5} min read</span>
@@ -242,7 +242,7 @@ const Dashboard = () => {
                           {blog.status}
                         </span>
                         <Link
-                          href={`/blog/${blog.slug}`}
+                          href={`/blog/${blog.slug || 'untitled'}`}
                           className="btn-outline btn-sm"
                         >
                           View

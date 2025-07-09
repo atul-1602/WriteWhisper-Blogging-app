@@ -255,7 +255,7 @@ const SearchPageContent = () => {
                       <option value="">All Categories</option>
                       {categories.map((category) => (
                         <option key={category._id} value={category._id}>
-                          {category.name} ({category.blogCount})
+                          {category?.name || 'Uncategorized'} ({category?.blogCount || 0})
                         </option>
                       ))}
                     </select>
@@ -288,7 +288,7 @@ const SearchPageContent = () => {
                   <p className="text-secondary-600 text-sm mt-1">
                     {searchQuery && `Searching for: "${searchQuery}"`}
                     {searchQuery && selectedCategory && ' • '}
-                    {selectedCategory && `Category: ${categories.find(c => c._id === selectedCategory)?.name}`}
+                    {selectedCategory && `Category: ${categories.find(c => c._id === selectedCategory)?.name || 'Unknown'}`}
                   </p>
                 )}
               </div>
@@ -357,7 +357,7 @@ const SearchPageContent = () => {
                         {blogs.map((blog) => (
                           <Link
                             key={blog._id}
-                            href={`/blog/${blog.slug}`}
+                            href={`/blog/${blog.slug || 'untitled'}`}
                             className="block"
                           >
                             <motion.article
@@ -368,7 +368,7 @@ const SearchPageContent = () => {
                                 <div className="aspect-video overflow-hidden relative">
                                   <img
                                     src={blog.coverImage}
-                                    alt={blog.title}
+                                    alt={blog.title || 'Blog post'}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -379,11 +379,11 @@ const SearchPageContent = () => {
                                   <span 
                                     className="badge text-xs"
                                     style={{ 
-                                      backgroundColor: blog.category.color + '20', 
-                                      color: blog.category.color 
+                                      backgroundColor: blog.category?.color + '20', 
+                                      color: blog.category?.color 
                                     }}
                                   >
-                                    {blog.category.name}
+                                    {blog.category?.name || 'Uncategorized'}
                                   </span>
                                   {blog.featured && (
                                     <span className="badge-accent text-xs inline-flex items-center">
@@ -393,10 +393,10 @@ const SearchPageContent = () => {
                                   )}
                                 </div>
                                 <h3 className="text-xl font-semibold text-secondary-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2 leading-tight">
-                                  {blog.title}
+                                  {blog.title || 'Untitled Blog'}
                                 </h3>
                                 <p className="text-secondary-600 mb-4 line-clamp-3 leading-relaxed">
-                                  {blog.excerpt}
+                                  {blog.excerpt || 'No excerpt available.'}
                                 </p>
                                 <div className="mt-auto pt-4 border-t border-secondary-200">
                                   <div className="flex items-center justify-between text-sm text-secondary-500 mb-3">
@@ -423,13 +423,13 @@ const SearchPageContent = () => {
                                   </div>
                                   <div className="flex items-center space-x-3">
                                   <img
-                                    src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
-                                    alt={blog.author?.firstName}
+                                    src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName || 'User'}+${blog.author?.lastName || ''}&background=3b82f6&color=fff`}
+                                    alt={blog.author?.firstName || 'User'}
                                     className="w-8 h-8 rounded-full ring-2 ring-secondary-200"
                                   />
                                   <div>
                                     <div className="text-sm font-medium text-secondary-900">
-                                      {blog.author?.firstName} {blog.author?.lastName}
+                                      {blog.author?.firstName || 'Anonymous'} {blog.author?.lastName || ''}
                                     </div>
                                     <div className="text-xs text-secondary-500">
                                       {formatDate(blog.createdAt)}
@@ -455,7 +455,7 @@ const SearchPageContent = () => {
                         {blogs.map((blog) => (
                           <Link
                             key={blog._id}
-                            href={`/blog/${blog.slug}`}
+                            href={`/blog/${blog.slug || 'untitled'}`}
                             className="block"
                           >
                             <motion.article
@@ -467,7 +467,7 @@ const SearchPageContent = () => {
                                   <div className="w-32 h-24 rounded-lg overflow-hidden flex-shrink-0 relative">
                                     <img
                                       src={blog.coverImage}
-                                      alt={blog.title}
+                                      alt={blog.title || 'Blog post'}
                                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -478,11 +478,11 @@ const SearchPageContent = () => {
                                     <span 
                                       className="badge text-xs"
                                       style={{ 
-                                        backgroundColor: blog.category.color + '20', 
-                                        color: blog.category.color 
+                                        backgroundColor: blog.category?.color + '20', 
+                                        color: blog.category?.color 
                                       }}
                                     >
-                                      {blog.category.name}
+                                      {blog.category?.name || 'Uncategorized'}
                                     </span>
                                     {blog.featured && (
                                       <span className="badge-accent text-xs">
@@ -492,10 +492,10 @@ const SearchPageContent = () => {
                                     )}
                                   </div>
                                   <h3 className="text-xl font-semibold text-secondary-900 mb-2 hover:text-primary-600 transition-colors duration-200">
-                                    {blog.title}
+                                    {blog.title || 'Untitled Blog'}
                                   </h3>
                                   <p className="text-secondary-600 mb-3 line-clamp-2">
-                                    {blog.excerpt}
+                                    {blog.excerpt || 'No excerpt available.'}
                                   </p>
                                   <div className="flex items-center justify-between pt-3 border-t border-secondary-200">
                                     <div className="flex items-center space-x-4 text-sm text-secondary-500">
@@ -518,13 +518,13 @@ const SearchPageContent = () => {
                                     </div>
                                     <div className="flex items-center space-x-3">
                                       <img
-                                        src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
-                                        alt={blog.author?.firstName}
+                                        src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName || 'User'}+${blog.author?.lastName || ''}&background=3b82f6&color=fff`}
+                                        alt={blog.author?.firstName || 'User'}
                                         className="w-8 h-8 rounded-full ring-2 ring-secondary-200"
                                       />
                                       <div>
                                         <div className="text-sm font-medium text-secondary-900">
-                                          {blog.author?.firstName} {blog.author?.lastName}
+                                          {blog.author?.firstName || 'Anonymous'} {blog.author?.lastName || ''}
                                         </div>
                                         <div className="text-xs text-secondary-500">
                                           {formatDate(blog.createdAt)}
