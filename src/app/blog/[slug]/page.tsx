@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -58,23 +58,28 @@ const BlogDetailPage = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
 
-  // Fetch blog details
-  const fetchBlog = async () => {
-    setLoading(true);
+  const fetchBlog = useCallback(async () => {
     try {
+      setLoading(true);
+      setError(null);
+      
       const response = await api.get(`/blogs/${slug}`);
-      setBlog(response.data.data);
-    } catch (error) {
-      console.error('Error fetching blog:', error);
-      setError('Blog not found or has been removed.');
+      setBlog(response.data);
+      
+      // Check if user has liked/bookmarked this blog
+      if (response.data.isLiked) setIsLiked(true);
+      if (response.data.isBookmarked) setIsBookmarked(true);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load blog';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  };
+  }, [slug]);
 
   useEffect(() => {
     fetchBlog();
-  }, [slug]);
+  }, [fetchBlog]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {

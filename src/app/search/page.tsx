@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
@@ -53,62 +53,61 @@ interface Category {
 }
 
 const SearchPage = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
+  const [sortBy, setSortBy] = useState(searchParams.get('sort') || 'newest');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
-  const [sortBy, setSortBy] = useState('newest');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 12,
+    currentPage: 1,
+    totalPages: 1,
     total: 0,
-    pages: 0
+    hasNext: false,
+    hasPrev: false
   });
 
-  // Fetch blogs based on filters
-  const fetchBlogs = async (page = 1) => {
-    setLoading(true);
+  const fetchBlogs = useCallback(async (page = 1) => {
     try {
+      setLoading(true);
+      
       const params = new URLSearchParams();
-      if (searchQuery) params.append('search', searchQuery);
-      if (selectedCategory) params.append('category', selectedCategory);
-      params.append('page', page.toString());
-      params.append('limit', pagination.limit.toString());
-      params.append('sort', sortBy);
-
-      const response = await api.get(`/blogs?${params.toString()}`);
-      setBlogs(response.data.data);
+      if (searchQuery) params.set('q', searchQuery);
+      if (selectedCategory) params.set('category', selectedCategory);
+      if (sortBy !== 'newest') params.set('sort', sortBy);
+      params.set('page', page.toString());
+      
+      const response = await api.get(`/blogs/search?${params.toString()}`);
+      setBlogs(response.data.blogs);
       setPagination(response.data.pagination);
     } catch (error) {
       console.error('Error fetching blogs:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery, selectedCategory, sortBy]);
 
-  // Fetch categories
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const response = await api.get('/categories');
-      setCategories(response.data.data);
+      setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
-  };
-
-  useEffect(() => {
-    fetchCategories();
   }, []);
 
   useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
     fetchBlogs(1);
-  }, [searchQuery, selectedCategory, sortBy]);
+  }, [fetchBlogs]);
 
   // Update URL when search changes
   useEffect(() => {
@@ -542,22 +541,22 @@ const SearchPage = () => {
                     )}
 
                     {/* Pagination */}
-                    {pagination.pages > 1 && (
+                    {pagination.totalPages > 1 && (
                       <div className="flex justify-center mt-8">
                         <div className="flex items-center space-x-2">
                           <button
-                            onClick={() => fetchBlogs(pagination.page - 1)}
-                            disabled={pagination.page === 1}
+                            onClick={() => fetchBlogs(pagination.currentPage - 1)}
+                            disabled={pagination.currentPage === 1}
                             className="btn-outline btn-sm disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             Previous
                           </button>
                           <span className="text-secondary-600">
-                            Page {pagination.page} of {pagination.pages}
+                            Page {pagination.currentPage} of {pagination.totalPages}
                           </span>
                           <button
-                            onClick={() => fetchBlogs(pagination.page + 1)}
-                            disabled={pagination.page === pagination.pages}
+                            onClick={() => fetchBlogs(pagination.currentPage + 1)}
+                            disabled={pagination.currentPage === pagination.totalPages}
                             className="btn-outline btn-sm disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             Next

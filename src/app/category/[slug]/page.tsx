@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -57,60 +57,59 @@ const CategoryPage = () => {
   const params = useParams();
   const slug = params.slug as string;
   
-  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [category, setCategory] = useState<Category | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
-  const [sortBy, setSortBy] = useState('newest');
   const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 12,
+    currentPage: 1,
+    totalPages: 1,
     total: 0,
-    pages: 0
+    hasNext: false,
+    hasPrev: false
   });
 
-  // Fetch category details
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
     try {
-      const response = await api.get('/categories');
-      const categories = response.data.data;
-      const foundCategory = categories.find((cat: Category) => cat.slug === slug);
-      setCategory(foundCategory || null);
+      const response = await api.get(`/categories/${slug}`);
+      setCategory(response.data);
     } catch (error) {
       console.error('Error fetching category:', error);
     }
-  };
+  }, [slug]);
 
-  // Fetch blogs for this category
-  const fetchBlogs = async (page = 1) => {
-    setLoading(true);
+  const fetchBlogs = useCallback(async (page = 1) => {
+    if (!category) return;
+    
     try {
+      setLoading(true);
+      
       const params = new URLSearchParams();
-      params.append('categorySlug', slug);
-      params.append('page', page.toString());
-      params.append('limit', pagination.limit.toString());
-      params.append('sort', sortBy);
-
+      params.set('category', category._id);
+      if (sortBy !== 'newest') params.set('sort', sortBy);
+      params.set('page', page.toString());
+      
       const response = await api.get(`/blogs?${params.toString()}`);
-      setBlogs(response.data.data);
+      setBlogs(response.data.blogs);
       setPagination(response.data.pagination);
     } catch (error) {
       console.error('Error fetching blogs:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [category, sortBy]);
 
   useEffect(() => {
     fetchCategory();
-  }, [slug]);
+  }, [fetchCategory]);
 
   useEffect(() => {
     if (category) {
       fetchBlogs(1);
     }
-  }, [category, sortBy]);
+  }, [category, fetchBlogs]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -494,7 +493,7 @@ const CategoryPage = () => {
         )}
 
         {/* Pagination */}
-        {pagination.pages > 1 && (
+        {pagination.totalPages > 1 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -502,21 +501,21 @@ const CategoryPage = () => {
             className="mt-12 flex justify-center"
           >
             <div className="flex items-center space-x-2">
-              {pagination.page > 1 && (
+              {pagination.currentPage > 1 && (
                 <button
-                  onClick={() => fetchBlogs(pagination.page - 1)}
+                  onClick={() => fetchBlogs(pagination.currentPage - 1)}
                   className="btn-outline btn-sm"
                 >
                   Previous
                 </button>
               )}
               
-              {[...Array(pagination.pages)].map((_, i) => {
+              {[...Array(pagination.totalPages)].map((_, i) => {
                 const page = i + 1;
-                const isActive = page === pagination.page;
-                const isNearActive = Math.abs(page - pagination.page) <= 1;
+                const isActive = page === pagination.currentPage;
+                const isNearActive = Math.abs(page - pagination.currentPage) <= 1;
                 const isFirst = page === 1;
-                const isLast = page === pagination.pages;
+                const isLast = page === pagination.totalPages;
                 
                 if (isActive || isNearActive || isFirst || isLast) {
                   return (
@@ -532,15 +531,15 @@ const CategoryPage = () => {
                       {page}
                     </button>
                   );
-                } else if (page === pagination.page - 2 || page === pagination.page + 2) {
+                } else if (page === pagination.currentPage - 2 || page === pagination.currentPage + 2) {
                   return <span key={page} className="text-secondary-400">...</span>;
                 }
                 return null;
               })}
               
-              {pagination.page < pagination.pages && (
+              {pagination.currentPage < pagination.totalPages && (
                 <button
-                  onClick={() => fetchBlogs(pagination.page + 1)}
+                  onClick={() => fetchBlogs(pagination.currentPage + 1)}
                   className="btn-outline btn-sm"
                 >
                   Next
