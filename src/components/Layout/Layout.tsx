@@ -45,13 +45,13 @@ const Layout = ({ children }: LayoutProps) => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-white to-secondary-50">
+    <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-white to-secondary-50 overflow-x-hidden">
       {/* Navigation */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-white/80 backdrop-blur-md shadow-soft border-b border-secondary-200/50 sticky top-0 z-50"
+        className="bg-white/90 backdrop-blur-md shadow-soft border-b border-secondary-200/50 sticky top-0 z-50"
       >
         <div className="container-custom">
           <div className="flex justify-between items-center h-16">
@@ -69,7 +69,7 @@ const Layout = ({ children }: LayoutProps) => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -95,7 +95,7 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
 
             {/* Right side */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               {/* Theme Toggle */}
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 180 }}
@@ -114,7 +114,7 @@ const Layout = ({ children }: LayoutProps) => {
               {/* User Menu */}
               {isAuthenticated ? (
                 <div className="relative">
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -151,7 +151,7 @@ const Layout = ({ children }: LayoutProps) => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -10, scale: 0.95 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute right-0 mt-2 w-48 bg-white/90 backdrop-blur-md rounded-xl shadow-strong border border-secondary-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                          className="absolute right-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-strong border border-secondary-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                         >
                           <div className="py-1">
                             {userNavigation.map((item) => {
@@ -228,7 +228,7 @@ const Layout = ({ children }: LayoutProps) => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden border-t border-secondary-200/50 bg-white/90 backdrop-blur-md"
+              className="md:hidden border-t border-secondary-200/50 bg-white/95 backdrop-blur-md"
             >
               <div className="px-4 py-2 space-y-1">
                 {navigation.map((item) => {
@@ -313,7 +313,7 @@ const Layout = ({ children }: LayoutProps) => {
       </motion.nav>
 
       {/* Main Content */}
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-hidden">
         {children}
       </main>
 
@@ -323,7 +323,7 @@ const Layout = ({ children }: LayoutProps) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="bg-white/80 backdrop-blur-md border-t border-secondary-200/50 mt-16"
+        className="bg-white/90 backdrop-blur-md border-t border-secondary-200/50 mt-16"
       >
         <div className="container-custom py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

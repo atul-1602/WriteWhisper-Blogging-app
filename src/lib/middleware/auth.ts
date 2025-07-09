@@ -4,7 +4,14 @@ import UserModel from '../models/User';
 import dbConnect from '../utils/db';
 
 export interface AuthenticatedRequest extends NextRequest {
-  user?: any;
+  user?: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    isActive: boolean;
+  };
 }
 
 export const protect = async (req: AuthenticatedRequest) => {
@@ -23,7 +30,7 @@ export const protect = async (req: AuthenticatedRequest) => {
       }
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { id: string };
 
       // Connect to database
       await dbConnect();

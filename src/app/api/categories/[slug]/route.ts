@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import CategoryModel from '../../../../lib/models/Category';
 import BlogModel from '../../../../lib/models/Blog';
 import dbConnect from '../../../../lib/utils/db';
 
@@ -23,18 +24,15 @@ export async function GET(
 
     const { slug } = await context.params;
 
-    // Find blog by slug
-    const blog = await BlogModel.findOne({ 
+    // Find category by slug
+    const category = await CategoryModel.findOne({ 
       slug, 
-      isDeleted: false, 
-      isPublished: true 
-    })
-    .populate('author', 'firstName lastName avatar bio')
-    .populate('category', 'name color');
+      isActive: true 
+    });
 
-    if (!blog) {
+    if (!category) {
       const errorResponse = NextResponse.json(
-        { success: false, error: 'Blog not found' },
+        { success: false, error: 'Category not found' },
         { status: 404 }
       );
 
@@ -47,14 +45,21 @@ export async function GET(
       return errorResponse;
     }
 
-    // Increment view count
-    await BlogModel.findByIdAndUpdate(blog._id, {
-      $inc: { views: 1 }
+    // Get blog count for this category
+    const blogCount = await BlogModel.countDocuments({ 
+      category: category._id, 
+      isDeleted: false, 
+      isPublished: true 
     });
+
+    const categoryWithCount = {
+      ...category.toObject(),
+      blogCount
+    };
 
     const response = NextResponse.json({
       success: true,
-      data: blog
+      data: categoryWithCount
     });
 
     // Add CORS headers
@@ -66,9 +71,9 @@ export async function GET(
     return response;
 
   } catch (error: unknown) {
-    console.error('Get blog error:', error);
+    console.error('Get category error:', error);
     const errorResponse = NextResponse.json(
-      { success: false, error: 'Failed to fetch blog' },
+      { success: false, error: 'Failed to fetch category' },
       { status: 500 }
     );
 

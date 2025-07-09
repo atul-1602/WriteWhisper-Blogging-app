@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import BlogModel from '../../../../lib/models/Blog';
-import { protect } from '../../../../lib/middleware/auth';
+import { protect, AuthenticatedRequest } from '../../../../lib/middleware/auth';
 
 export async function GET(request: NextRequest) {
   try {
     // Use the protect middleware
-    const authResult = await protect(request as any);
+    const authResult = await protect(request as AuthenticatedRequest);
     if (authResult) {
       return authResult;
     }
 
-    const user = (request as any).user;
-
+    const user = (request as AuthenticatedRequest).user;
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: 'Not authorized' },
+        { status: 401 }
+      );
+    }
     // Get user's blogs
     const blogs = await BlogModel.find({ 
       author: user._id,
