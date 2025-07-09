@@ -1,7 +1,13 @@
 import axios from 'axios';
+import { getApiUrl, debugEnvironment } from '../lib/utils/env';
+
+// Debug environment in development
+if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+  debugEnvironment();
+}
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api',
+  baseURL: getApiUrl(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
