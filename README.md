@@ -2,6 +2,15 @@
 
 A modern, full-stack blog platform built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **Node.js**. Writers can create, share, and discover amazing stories in a beautiful, responsive environment.
 
+<img width="1512" alt="Screenshot 2025-07-09 at 10 03 44 PM" src="https://github.com/user-attachments/assets/503b078f-35f2-4a9c-ac2a-920327823129" />
+
+
+<img width="1512" alt="Screenshot 2025-07-09 at 10 15 54 PM" src="https://github.com/user-attachments/assets/6cf20823-8689-45fb-b7e6-c85dc44ef78b" />
+
+
+<img width="1512" alt="Screenshot 2025-07-09 at 10 16 24 PM" src="https://github.com/user-attachments/assets/4ff87305-833c-46a7-92ee-c584a652d68b" />
+
+
 ## 🚀 Features
 
 - **Modern UI/UX**: Beautiful, responsive design with smooth animations
