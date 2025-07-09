@@ -13,18 +13,26 @@ export async function OPTIONS() {
 }
 
 export async function GET() {
-  const response = NextResponse.json({
-    status: 'OK',
-    message: 'WriteWhisper API is running',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
+  try {
+    // Basic health check
+    const health = {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      environment: process.env.NODE_ENV,
+      version: process.env.npm_package_version || '1.0.0',
+    };
 
-  // Add CORS headers
-  response.headers.set('Access-Control-Allow-Origin', '*');
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-  return response;
+    return NextResponse.json(health, { status: 200 });
+  } catch (error) {
+    console.error('Health check failed:', error);
+    return NextResponse.json(
+      { 
+        status: 'unhealthy', 
+        error: 'Health check failed',
+        timestamp: new Date().toISOString()
+      }, 
+      { status: 500 }
+    );
+  }
 } 

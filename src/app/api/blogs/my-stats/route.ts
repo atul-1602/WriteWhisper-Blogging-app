@@ -11,6 +11,14 @@ export async function GET(request: NextRequest) {
     }
 
     const user = (request as AuthenticatedRequest).user;
+    
+    // Check if user exists
+    if (!user || !user._id) {
+      return NextResponse.json(
+        { success: false, error: 'User not found' },
+        { status: 401 }
+      );
+    }
 
     // Get user's blog statistics
     const totalBlogs = await BlogModel.countDocuments({ author: user._id, isDeleted: false });

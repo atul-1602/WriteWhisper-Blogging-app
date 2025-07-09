@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://writewhisper.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /create-blog/
+
+# Allow important pages
+Allow: /
+Allow: /blog/
+Allow: /category/
+Allow: /search
+Allow: /login
+Allow: /signup
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1 

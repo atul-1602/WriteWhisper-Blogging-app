@@ -52,6 +52,22 @@ export async function POST(request: NextRequest) {
 
     // Get user from request
     const user = (request as AuthenticatedRequest).user;
+    
+    // Check if user exists
+    if (!user || !user._id) {
+      const errorResponse = NextResponse.json(
+        { success: false, error: 'User not found' },
+        { status: 401 }
+      );
+
+      // Add CORS headers to error response
+      errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+      errorResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      errorResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      errorResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+      return errorResponse;
+    }
 
     // Create new blog
     const blog = await BlogModel.create({

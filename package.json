@@ -2,12 +2,15 @@
   "name": "writewhisper-blog",
   "version": "1.0.0",
   "private": true,
-  "description": "A modern blog platform built with Next.js and Node.js",
+  "description": "A modern blog platform where writers share their knowledge, stories, and insights",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .next out",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -29,7 +32,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
-    "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^15.6.1",
     "sanitize-html": "^2.10.0",
@@ -44,10 +46,15 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-syntax-highlighter": "^15.5.11",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "keywords": [
     "blog",
@@ -57,8 +64,19 @@
     "typescript",
     "tailwindcss",
     "mongodb",
-    "express"
+    "express",
+    "writing",
+    "content",
+    "publishing"
   ],
   "author": "WriteWhisper Team",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/writewhisper-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/writewhisper-blog/issues"
+  },
+  "homepage": "https://writewhisper.com"
 }
