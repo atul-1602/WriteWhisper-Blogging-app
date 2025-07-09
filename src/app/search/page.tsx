@@ -386,10 +386,10 @@ const SearchPage = () => {
                                     {blog.category.name}
                                   </span>
                                   {blog.featured && (
-                                    <span className="badge-accent text-xs">
-                                      <TrendingUp className="w-3 h-3 mr-1" />
-                                      Featured
-                                    </span>
+                                    <span className="badge-accent text-xs inline-flex items-center">
+                                    <TrendingUp className="w-3 h-3 mr-1" />
+                                    Featured
+                                  </span>                                  
                                   )}
                                 </div>
                                 <h3 className="text-lg font-semibold text-secondary-900 mb-2 line-clamp-2 hover:text-primary-600 transition-colors duration-200">

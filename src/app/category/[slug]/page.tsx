@@ -316,9 +316,9 @@ const CategoryPage = () => {
             <p className="text-secondary-600 mb-6">
               Be the first to write a blog in the {category.name} category!
             </p>
-            <Link href="/create-blog" className="btn-primary">
-              Write a Blog
-            </Link>
+              <Link href="/create-blog" className="btn-primary inline-flex items-center rounded-full p-2">
+                Write a Blog
+              </Link>
           </motion.div>
         ) : (
           <motion.div

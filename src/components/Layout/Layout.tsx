@@ -6,15 +6,15 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import { 
-  Home, 
-  Search, 
-  Plus, 
-  User, 
-  LogOut, 
-  Menu, 
-  X, 
-  Sun, 
+import {
+  Home,
+  Search,
+  Plus,
+  User,
+  LogOut,
+  Menu,
+  X,
+  Sun,
   Moon,
   BookOpen,
   Bookmark
@@ -47,21 +47,21 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary-50 via-white to-secondary-50 overflow-x-hidden">
       {/* Navigation */}
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-white/90 backdrop-blur-md shadow-soft border-b border-secondary-200/50 sticky top-0 z-50"
+        className="bg-white/95 backdrop-blur-md shadow-soft border-b border-secondary-200/50 sticky top-0 z-50"
       >
         <div className="container-custom">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 group">
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05, rotate: 5 }}
-                className="w-8 h-8 bg-gradient-to-r from-primary-600 to-accent-600 rounded-lg flex items-center justify-center shadow-soft"
+                className="w-10 h-10 bg-gradient-to-r from-primary-600 to-accent-600 rounded-xl flex items-center justify-center shadow-soft"
               >
-                <BookOpen className="w-5 h-5 text-white" />
+                <BookOpen className="w-6 h-6 text-white" />
               </motion.div>
               <span className="text-xl font-bold gradient-text group-hover:scale-105 transition-transform duration-200">
                 WriteWhisper
@@ -80,11 +80,10 @@ const Layout = ({ children }: LayoutProps) => {
                   >
                     <Link
                       href={item.href}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-                        isActive(item.href)
-                          ? 'text-primary-600 bg-primary-50 shadow-soft'
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${isActive(item.href)
+                          ? 'text-primary-600 bg-gradient-to-r from-primary-50 to-accent-50 shadow-soft'
                           : 'text-secondary-600 hover:text-primary-600 hover:bg-secondary-50 hover:shadow-soft'
-                      }`}
+                        }`}
                     >
                       <Icon className="w-4 h-4" />
                       <span>{item.name}</span>
@@ -101,7 +100,7 @@ const Layout = ({ children }: LayoutProps) => {
                 whileHover={{ scale: 1.1, rotate: 180 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={toggleTheme}
-                className="p-2 text-secondary-600 hover:text-primary-600 hover:bg-secondary-100 rounded-xl transition-colors duration-200"
+                className="p-2 text-secondary-600 hover:text-primary-600 hover:bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl transition-all duration-200 shadow-soft hover:shadow-medium"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
@@ -121,18 +120,19 @@ const Layout = ({ children }: LayoutProps) => {
                     >
                       <Link
                         href="/create-blog"
-                        className="btn-primary btn-sm hidden sm:flex shadow-soft hover:shadow-medium transition-all duration-300"
+                        className="btn-primary btn-sm shadow-soft hover:shadow-medium transition-all duration-300 inline-flex items-center"
                       >
                         <Plus className="w-4 h-4 mr-1" />
                         Write
                       </Link>
+
                     </motion.div>
-                    
+
                     <div className="relative group">
-                      <motion.button 
+                      <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center space-x-2 p-2 rounded-xl hover:bg-secondary-100 transition-all duration-200"
+                        className="flex items-center space-x-2 p-2 rounded-xl hover:bg-gradient-to-r from-primary-50 to-accent-50 transition-all duration-200 shadow-soft hover:shadow-medium"
                       >
                         <img
                           src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.firstName}+${user?.lastName}&background=3b82f6&color=fff`}
@@ -143,10 +143,10 @@ const Layout = ({ children }: LayoutProps) => {
                           {user?.firstName} {user?.lastName}
                         </span>
                       </motion.button>
-                      
+
                       {/* Dropdown Menu */}
                       <AnimatePresence>
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, y: -10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -164,7 +164,7 @@ const Layout = ({ children }: LayoutProps) => {
                                 >
                                   <Link
                                     href={item.href}
-                                    className="flex items-center space-x-2 px-4 py-2 text-sm text-secondary-700 hover:bg-secondary-50 hover:text-primary-600 transition-colors duration-200"
+                                    className="flex items-center space-x-2 px-4 py-2 text-sm text-secondary-700 hover:bg-gradient-to-r from-primary-50 to-accent-50 hover:text-primary-600 transition-colors duration-200"
                                   >
                                     <Icon className="w-4 h-4" />
                                     <span>{item.name}</span>
@@ -191,7 +191,7 @@ const Layout = ({ children }: LayoutProps) => {
               ) : (
                 <div className="flex items-center space-x-2">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Link href="/login" className="btn-outline btn-sm">
+                    <Link href="/login" className="btn-outline btn-sm shadow-soft hover:shadow-medium">
                       Login
                     </Link>
                   </motion.div>
@@ -223,7 +223,7 @@ const Layout = ({ children }: LayoutProps) => {
         {/* Mobile Navigation */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -241,11 +241,10 @@ const Layout = ({ children }: LayoutProps) => {
                     >
                       <Link
                         href={item.href}
-                        className={`flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                          isActive(item.href)
+                        className={`flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${isActive(item.href)
                             ? 'text-primary-600 bg-primary-50 shadow-soft'
                             : 'text-secondary-600 hover:text-primary-600 hover:bg-secondary-50'
-                        }`}
+                          }`}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <Icon className="w-4 h-4" />
@@ -318,7 +317,7 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
       {/* Footer */}
-      <motion.footer 
+      <motion.footer
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -329,7 +328,7 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   className="w-8 h-8 bg-gradient-to-r from-primary-600 to-accent-600 rounded-lg flex items-center justify-center shadow-soft"
                 >
@@ -338,11 +337,11 @@ const Layout = ({ children }: LayoutProps) => {
                 <span className="text-xl font-bold gradient-text">WriteWhisper</span>
               </div>
               <p className="text-secondary-600 max-w-md">
-                Share your thoughts, stories, and knowledge with the world. 
+                Share your thoughts, stories, and knowledge with the world.
                 Join our community of writers and readers.
               </p>
             </div>
-            
+
             <div>
               <h3 className="font-semibold text-secondary-900 mb-4">Platform</h3>
               <ul className="space-y-2">
@@ -369,7 +368,7 @@ const Layout = ({ children }: LayoutProps) => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="font-semibold text-secondary-900 mb-4">Support</h3>
               <ul className="space-y-2">
@@ -397,7 +396,7 @@ const Layout = ({ children }: LayoutProps) => {
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t border-secondary-200/50 mt-8 pt-8 text-center">
             <p className="text-secondary-500 text-sm">
               © 2024 WriteWhisper. All rights reserved.

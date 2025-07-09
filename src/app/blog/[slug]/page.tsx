@@ -271,22 +271,18 @@ const BlogDetailPage = () => {
             className="mb-8"
           >
             {/* Category and Featured Badge */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-3 mb-6">
               <Link
                 href={`/category/${blog.category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                className="badge text-sm"
-                style={{ 
-                  backgroundColor: blog.category.color + '20', 
-                  color: blog.category.color 
-                }}
+                className="badge-primary text-sm shadow-soft hover:shadow-medium"
               >
                 {blog.category.name}
               </Link>
               {blog.featured && (
-                <span className="badge-accent text-sm">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  Featured
-                </span>
+                <span className="badge-accent text-sm shadow-soft hover:shadow-medium inline-flex items-center">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                Featured
+              </span>              
               )}
             </div>
 
@@ -301,15 +297,18 @@ const BlogDetailPage = () => {
             </p>
 
             {/* Author and Meta Info */}
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
               <div className="flex items-center space-x-4">
-                <img
-                  src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
-                  alt={`${blog.author?.firstName} ${blog.author?.lastName}`}
-                  className="w-12 h-12 rounded-full ring-2 ring-secondary-200"
-                />
+                <div className="relative">
+                  <img
+                    src={blog.author?.avatar || `https://ui-avatars.com/api/?name=${blog.author?.firstName}+${blog.author?.lastName}&background=3b82f6&color=fff`}
+                    alt={`${blog.author?.firstName} ${blog.author?.lastName}`}
+                    className="w-14 h-14 rounded-full ring-3 ring-secondary-200 shadow-soft"
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full border-2 border-white"></div>
+                </div>
                 <div>
-                  <p className="font-semibold text-secondary-900">
+                  <p className="font-semibold text-secondary-900 text-lg">
                     {blog.author?.firstName} {blog.author?.lastName}
                   </p>
                   <p className="text-sm text-secondary-600">
@@ -318,14 +317,14 @@ const BlogDetailPage = () => {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-6 text-sm text-secondary-500">
-                <div className="flex items-center space-x-1">
-                  <Clock className="w-4 h-4" />
-                  <span>{blog.readTime} min read</span>
+              <div className="flex items-center space-x-4 text-sm text-secondary-500">
+                <div className="flex items-center space-x-2 bg-secondary-50 px-3 py-2 rounded-xl shadow-soft">
+                  <Clock className="w-4 h-4 text-primary-600" />
+                  <span className="font-medium">{blog.readTime} min read</span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Eye className="w-4 h-4" />
-                  <span>{blog.views} views</span>
+                <div className="flex items-center space-x-2 bg-secondary-50 px-3 py-2 rounded-xl shadow-soft">
+                  <Eye className="w-4 h-4 text-primary-600" />
+                  <span className="font-medium">{blog.views} views</span>
                 </div>
               </div>
             </div>
@@ -339,11 +338,14 @@ const BlogDetailPage = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <img
-                src={blog.coverImage}
-                alt={blog.title}
-                className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-soft"
-              />
+              <div className="relative overflow-hidden rounded-2xl shadow-soft">
+                <img
+                  src={blog.coverImage}
+                  alt={blog.title}
+                  className="w-full h-64 md:h-96 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
             </motion.div>
           )}
 
@@ -369,14 +371,14 @@ const BlogDetailPage = () => {
               className="mt-8 pt-8 border-t border-secondary-200"
             >
               <div className="flex items-center space-x-2 mb-4">
-                <Tag className="w-5 h-5 text-secondary-500" />
+                <Tag className="w-5 h-5 text-primary-600" />
                 <span className="font-semibold text-secondary-900">Tags:</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {blog.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm hover:bg-secondary-200 transition-colors duration-200"
+                    className="px-4 py-2 bg-gradient-to-r from-primary-50 to-accent-50 text-primary-700 rounded-xl text-sm font-medium hover:from-primary-100 hover:to-accent-100 transition-all duration-200 shadow-soft hover:shadow-medium"
                   >
                     #{tag}
                   </span>

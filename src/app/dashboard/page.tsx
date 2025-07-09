@@ -84,8 +84,8 @@ const Dashboard = () => {
           <BookOpen className="w-16 h-16 text-secondary-300 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-secondary-900 mb-2">Error Loading Dashboard</h1>
           <p className="text-secondary-600 mb-6">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="btn-primary"
           >
             Try Again
@@ -117,11 +117,12 @@ const Dashboard = () => {
               </div>
               <Link
                 href="/create-blog"
-                className="btn-primary btn-lg"
+                className="btn-primary btn-lg inline-flex items-center"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Write New Blog
               </Link>
+
             </div>
           </motion.div>
 
@@ -199,11 +200,12 @@ const Dashboard = () => {
                   <p className="text-secondary-600 mb-6">Start writing your first blog post</p>
                   <Link
                     href="/create-blog"
-                    className="btn-primary"
+                    className="btn-primary inline-flex items-center rounded-full p-2"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Write Your First Blog
                   </Link>
+
                 </div>
               ) : (
                 <div className="space-y-6">
